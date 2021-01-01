@@ -23,7 +23,18 @@ function userOptions () {
 // Confirm number
 // adding return ends the function
 
-  
+   if (isNaN(confirmLength) === true) {
+     alert("Please choose a valid number.");
+     return 
+   }
+   if (confirmLength < 8) {
+     alert("Please enter a number greater than 8.");
+     return
+   }
+   if (confirmLength > 128) {
+     alert("Please enter a number less than 128.");
+     return
+   }
   // Once length is confirmed, user can add criteria
   // making a confirm as a var will hold the response
    
@@ -38,6 +49,7 @@ function userOptions () {
     alert("You must select at least one criteria option. For the highest security, select all four options.");
     return
     }
+    
 // Object for choice combination
     var userChoices = {
       confirmLength:confirmLength,
@@ -50,16 +62,54 @@ function userOptions () {
   }   
 
   // function is created to call randomly pull a character from the arrays
+function randomChar(array) {
+  var index = Math.floor(Math.random() * array.length);
+  var element = array[index];
 
+  return element;
+}
 
 // 3 arrays 1- for password 2- for chosen char 3- characters to include
+function generatePassword() {
+  var userChoices = userOptions();
+  console.log(userChoices)
 
+  var password = [];
+  var chosenChar = [];
+  var charsInc = [];
 
 // use . to get to an objects properties
 // make an if statement for each character option
- 
+  if (userChoices.confirmSpecialChar) {
+    charsInc = charsInc.concat(specialChar);
+    chosenChar.push(randomChar(specialChar));
+  }
+
+  if (userChoices.confirmNumber) {
+    charsInc = charsInc.concat(number);
+    chosenChar.push(randomChar(number));
+  }
+
+  if (userChoices.confirmUpper) {
+    charsInc = charsInc.concat(allUpper);
+    chosenChar.push(randomChar(allUpper));
+  }
+
+  if (userChoices.confirmLower) {
+    charsInc = charsInc.concat(allLower);
+    chosenChar.push(randomChar(allLower));
+  }
 // created the loop to check length. If greater than zero keep checking
- 
+  for(var i=0; i < userChoices.confirmLength; i++) {
+    var possibleChar = randomChar(charsInc);
+    password.push(possibleChar);
+  }
+// This loop should match the password with the length chosen in confirmLength var.
+  for(var i=0; i < chosenChar.length; i++) {
+    password[i] = chosenChar[i];
+  }
+// Include a return call? 
+  return password.join(" ");
     
 }
 
