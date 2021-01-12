@@ -14,13 +14,12 @@ var confirmNumber;
 var confirmUpper;
 var confirmLower;
 
-// parseInt
+// parseInt - this will 
 
 function userOptions () {
   var confirmLength = parseInt(prompt("Your password must be between 8 and 128 characters. Please enter a whole number to set the length of your password."));
    
-// break into separate
-// Confirm number
+// break into separate statements
 // adding return ends the function
 
    if (isNaN(confirmLength) === true) {
@@ -44,21 +43,21 @@ function userOptions () {
      confirmSpecialChar = confirm("Do you wish to include Special Characters such as '!' or '%'? Click OK to confirm.");
    
 
-  //  Need more else/if for no choice? Can the confirm option be greyed out until a choice is made?
+  //  If the person selects nothing for criteria
   if (!confirmUpper && !confirmLower && !confirmNumber && !confirmSpecialChar) {
     alert("You must select at least one criteria option. For the highest security, select all four options.");
     return
     }
     
-// Object for choice combination
-    var userChoices = {
+// Object for criteria options
+    var userCriteria = {
       confirmLength:confirmLength,
       confirmUpper:confirmUpper,
       confirmLower:confirmLower,
       confirmNumber:confirmNumber,
       confirmSpecialChar:confirmSpecialChar,
     }
-    return userChoices
+    return userCriteria;
   }   
 
   // function is created to call randomly pull a character from the arrays
@@ -71,8 +70,7 @@ function randomChar(array) {
 
 // 3 arrays 1- for password 2- for chosen char 3- characters to include
 function generatePassword() {
-  var userChoices = userOptions();
-  console.log(userChoices)
+  var userCriteria = userOptions();
 
   var password = [];
   var chosenChar = [];
@@ -80,27 +78,27 @@ function generatePassword() {
 
 // use . to get to an objects properties
 // make an if statement for each character option
-  if (userChoices.confirmSpecialChar) {
+  if (userCriteria.confirmSpecialChar) {
     charsInc = charsInc.concat(specialChar);
     chosenChar.push(randomChar(specialChar));
   }
 
-  if (userChoices.confirmNumber) {
+  if (userCriteria.confirmNumber) {
     charsInc = charsInc.concat(number);
     chosenChar.push(randomChar(number));
   }
 
-  if (userChoices.confirmUpper) {
+  if (userCriteria.confirmUpper) {
     charsInc = charsInc.concat(allUpper);
     chosenChar.push(randomChar(allUpper));
   }
 
-  if (userChoices.confirmLower) {
+  if (userCriteria.confirmLower) {
     charsInc = charsInc.concat(allLower);
     chosenChar.push(randomChar(allLower));
   }
 // created the loop to check length. If greater than zero keep checking
-  for(var i=0; i < userChoices.confirmLength; i++) {
+  for(var i=0; i < userCriteria.confirmLength; i++) {
     var possibleChar = randomChar(charsInc);
     password.push(possibleChar);
   }
